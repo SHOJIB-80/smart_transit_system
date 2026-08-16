@@ -1,1 +1,0 @@
-// Passenger UI helpers reserved for future AJAX/filter improvements.

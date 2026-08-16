@@ -1,1 +1,0 @@
-document.addEventListener('DOMContentLoaded',()=>{const t=document.getElementById('menuToggle'),n=document.getElementById('navLinks');if(t&&n)t.onclick=()=>n.classList.toggle('open');});
