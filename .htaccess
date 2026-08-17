@@ -1,0 +1,11 @@
+# SmartTransit local Apache hardening
+Options -Indexes
+
+<FilesMatch "^(\.env|\.env\..*|.*\.(sql|md|log|ini|bak|old|dist))$">
+    Require all denied
+</FilesMatch>
+
+# Never expose configuration files directly.
+<FilesMatch "^(config\.php|database\.php|functions\.php|auth\.php)$">
+    Require all denied
+</FilesMatch>
