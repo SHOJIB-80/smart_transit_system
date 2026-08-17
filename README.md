@@ -474,5 +474,3 @@ This project is licensed under the **MIT License** - see [LICENSE](./LICENSE) fo
 **Last Updated**: 2025  
 **Status**: 🟢 Active Development  
 **Repository**: [GitHub](https://github.com/SHOJIB-80/smart_transit_system)
-
-Made with ❤️ for educational excellence
