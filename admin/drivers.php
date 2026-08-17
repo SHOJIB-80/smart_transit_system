@@ -1,0 +1,27 @@
+<?php
+require_once __DIR__.'/_common.php'; $adminTitle='Driver Management'; checkPostCsrf();
+if($_SERVER['REQUEST_METHOD']==='POST'){
+ $action=postString('action');
+ try{
+  if($action==='save'){
+   $id=postInt('id');$name=postString('name');$email=postString('email');$phone=postString('phone');$status=postString('status','active');$bus=postInt('bus_id');$route=postInt('route_id');
+   if($name===''||$email==='') throw new Exception('Name and email are required.');
+   if($id){$pdo->prepare("UPDATE users SET name=?,email=?,phone=?,status=?,role='driver' WHERE id=?")->execute([$name,$email,$phone,$status,$id]);}
+   else{$password=$_POST['password']??'';if(strlen($password)<6)throw new Exception('New driver password must be at least 6 characters.');$st=$pdo->prepare("INSERT INTO users(name,email,phone,password,role,status) VALUES(?,?,?,?, 'driver',?)");$st->execute([$name,$email,$phone,password_hash($password,PASSWORD_DEFAULT),$status]);$id=(int)$pdo->lastInsertId();}
+   if($bus&&$route){$pdo->prepare("UPDATE driver_assignments SET status='inactive' WHERE (driver_id=? OR bus_id=?) AND status='active'")->execute([$id,$bus]);$pdo->prepare("INSERT INTO driver_assignments(driver_id,bus_id,route_id,status) VALUES(?,?,?,'active')")->execute([$id,$bus,$route]);}else{$pdo->prepare("UPDATE driver_assignments SET status='inactive' WHERE driver_id=? AND status='active'")->execute([$id]);}
+   adminLog('Driver saved','user',$id,$name);flash('success','Driver information saved.');
+  }elseif($action==='toggle'){$id=postInt('id');$pdo->prepare("UPDATE users SET status=IF(status='active','inactive','active') WHERE id=? AND role='driver'")->execute([$id]);adminLog('Driver status changed','user',$id);flash('success','Driver status updated.');}
+ }catch(Throwable $e){flash('error',$e instanceof PDOException?'Could not save driver. Email may already exist or assignment may be in use.':$e->getMessage());}
+ adminRedirect('drivers.php');
+}
+$edit=null;if(isset($_GET['edit'])){$st=$pdo->prepare("SELECT u.*,da.bus_id,da.route_id FROM users u LEFT JOIN driver_assignments da ON da.driver_id=u.id AND da.status='active' WHERE u.id=? AND u.role='driver'");$st->execute([(int)$_GET['edit']]);$edit=$st->fetch();}
+$drivers=$pdo->query("SELECT u.id,u.name,u.email,u.phone,u.status,da.bus_id,da.route_id,b.bus_number,r.route_code,r.route_name FROM users u LEFT JOIN driver_assignments da ON da.driver_id=u.id AND da.status='active' LEFT JOIN buses b ON b.id=da.bus_id LEFT JOIN routes r ON r.id=da.route_id WHERE u.role='driver' ORDER BY u.id DESC")->fetchAll();
+$buses=$pdo->query("SELECT id,bus_number FROM buses WHERE status<>'inactive' ORDER BY bus_number")->fetchAll();$routes=$pdo->query("SELECT id,route_code,route_name FROM routes WHERE status='active' ORDER BY route_code")->fetchAll();
+require __DIR__.'/_layout.php';
+?>
+<div class="admin-page-head"><div><span class="admin-kicker">STAFF</span><h2>Driver Management</h2><p>Manage driver accounts and assign the existing bus/route relationships.</p></div></div>
+<div class="admin-grid-2">
+<section class="admin-panel"><div class="admin-panel-head"><h3><?= $edit?'Edit Driver':'Add Driver' ?></h3></div><form method="post" class="admin-form"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><input type="hidden" name="action" value="save"><input type="hidden" name="id" value="<?= (int)($edit['id']??0) ?>"><label>Name<input required name="name" value="<?= e($edit['name']??'') ?>"></label><label>Email<input required type="email" name="email" value="<?= e($edit['email']??'') ?>"></label><label>Phone<input name="phone" value="<?= e($edit['phone']??'') ?>"></label><?php if(!$edit): ?><label>Password<input required type="password" name="password" minlength="6"></label><?php endif; ?><label>Status<select name="status"><?php foreach(['active','inactive','blocked'] as $v): ?><option <?= ($edit['status']??'active')===$v?'selected':'' ?>><?= $v ?></option><?php endforeach; ?></select></label><label>Assigned Bus<select name="bus_id"><option value="0">No assignment</option><?php foreach($buses as $b): ?><option value="<?= $b['id'] ?>" <?= ((int)($edit['bus_id']??0)==$b['id'])?'selected':'' ?>><?= e($b['bus_number']) ?></option><?php endforeach; ?></select></label><label>Assigned Route<select name="route_id"><option value="0">No assignment</option><?php foreach($routes as $r): ?><option value="<?= $r['id'] ?>" <?= ((int)($edit['route_id']??0)==$r['id'])?'selected':'' ?>><?= e($r['route_code'].' — '.$r['route_name']) ?></option><?php endforeach; ?></select></label><button class="admin-btn"><?= $edit?'Save Driver':'Create Driver' ?></button></form></section>
+<section class="admin-panel"><div class="admin-panel-head"><h3>Drivers</h3></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Driver</th><th>Status</th><th>Assignment</th><th>Actions</th></tr></thead><tbody><?php foreach($drivers as $d): ?><tr><td><strong><?= e($d['name']) ?></strong><small><?= e($d['email']) ?></small></td><td><?= statusBadge($d['status']) ?></td><td><?= $d['bus_number']?e($d['bus_number'].' · '.$d['route_code']):'<span class="muted">Unassigned</span>' ?></td><td class="action-links"><a href="?edit=<?= $d['id'] ?>">Edit</a><form method="post"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><input type="hidden" name="action" value="toggle"><input type="hidden" name="id" value="<?= $d['id'] ?>"><button>Toggle</button></form></td></tr><?php endforeach; ?></tbody></table></div></section>
+</div>
+<?php require __DIR__.'/_layout_end.php'; ?>
