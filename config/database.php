@@ -102,6 +102,32 @@ try {
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
         INDEX idx_activity_date(created_at)
     ) ENGINE=InnoDB");
+    // Final patch: passenger occupancy / boarding records.
+    $pdo->exec("CREATE TABLE IF NOT EXISTS bus_occupancy (
+        id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        bus_id INT UNSIGNED NOT NULL,
+        passenger_id INT UNSIGNED NOT NULL,
+        boarded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        exited_at TIMESTAMP NULL DEFAULT NULL,
+        FOREIGN KEY (bus_id) REFERENCES buses(id) ON DELETE CASCADE,
+        FOREIGN KEY (passenger_id) REFERENCES users(id) ON DELETE CASCADE,
+        INDEX idx_occupancy_bus_active (bus_id, exited_at),
+        INDEX idx_occupancy_passenger_active (passenger_id, exited_at)
+    ) ENGINE=InnoDB");
+
+    // Add GPS accuracy/explicit last_updated fields to the existing live location table.
+    $cols = $pdo->query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+                         WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'live_locations'")
+                 ->fetchAll(PDO::FETCH_COLUMN);
+    if (!in_array('accuracy', $cols, true)) {
+        $pdo->exec("ALTER TABLE live_locations ADD COLUMN accuracy DECIMAL(8,2) NULL AFTER longitude");
+    }
+    if (!in_array('last_updated', $cols, true)) {
+        $pdo->exec("ALTER TABLE live_locations ADD COLUMN last_updated DATETIME NULL AFTER updated_at");
+        $pdo->exec("UPDATE live_locations SET last_updated = updated_at WHERE last_updated IS NULL");
+        $pdo->exec("ALTER TABLE live_locations MODIFY last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
+    }
+
 
 } catch (PDOException $e) {
     die("Database connection failed. Please check config/database.php and make sure MySQL is running.");

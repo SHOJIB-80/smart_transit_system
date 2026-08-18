@@ -72,5 +72,5 @@ INSERT INTO notices (title,message,notice_type,priority,status) VALUES
 INSERT INTO driver_assignments (driver_id,bus_id,route_id,status)
 SELECT u.id,b.id,r.id,'active'
 FROM users u JOIN buses b ON b.bus_number='ST-101' JOIN routes r ON r.route_code='R-01'
-WHERE u.email='driver1@smarttransit.com'
+WHERE u.email='driver@smarttransit.com'
 ON DUPLICATE KEY UPDATE route_id=VALUES(route_id), status='active';

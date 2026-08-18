@@ -44,3 +44,19 @@
 @media print{.admin-sidebar,.admin-topbar,.print-hide,.admin-flash{display:none!important}.admin-main{margin:0;width:100%}.admin-content{padding:0}.admin-panel{box-shadow:none}}
 
 .detail-card{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}.detail-avatar{width:62px;height:62px;border-radius:18px;background:#e7f7ef;color:#087f5b;display:grid;place-items:center;font-size:24px;font-weight:850}.detail-card h3{margin:0;font-size:22px}.detail-card p{margin:5px 0;color:#71827c}.detail-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;border-top:1px solid #e5ece9;padding-top:18px}.detail-grid>div{background:#f7faf9;border-radius:10px;padding:12px;font-size:12px}.detail-grid small{display:block;color:#84938e;font-size:9px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px}@media(max-width:800px){.detail-grid{grid-template-columns:1fr 1fr}}
+
+/* Final patch: real GPS + passenger occupancy */
+.occupancy-mini{display:flex;align-items:center;gap:10px;margin:12px 0 6px;flex-wrap:wrap}
+.occupancy-mini strong{font-size:1.1rem}.occupancy-mini span{font-size:.85rem;color:#667085}.occupancy-mini b,.density-badge{font-size:.72rem;letter-spacing:.06em;padding:4px 8px;border-radius:999px}
+.density-low{color:#087f5b;background:#e8f7f1}.density-medium{color:#9a6700;background:#fff4cc}.density-high{color:#b42318;background:#ffe8e6}
+.occupancy-meter{height:7px;background:#edf0f2;border-radius:99px;overflow:hidden;margin:8px 0}
+.occupancy-meter i{display:block;height:100%;background:currentColor;border-radius:inherit}
+.occupancy-meter.large{height:11px}.bus-card-actions,.occupancy-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.occupancy-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.occupancy-detail-grid>div{padding:14px;border:1px solid #e7eaee;border-radius:12px;text-align:center}
+.occupancy-detail-grid strong{display:block;font-size:1.5rem}.occupancy-detail-grid span{font-size:.8rem;color:#667085}
+.panel-heading-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.gps-readout{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.gps-readout>div{padding:12px;border:1px solid #e7eaee;border-radius:12px;background:#fafbfc}
+.gps-readout span{display:block;font-size:.75rem;color:#667085}.gps-readout strong{display:block;margin-top:4px;font-size:.92rem;word-break:break-word}
+@media(max-width:700px){.gps-readout{grid-template-columns:repeat(2,1fr)}.occupancy-detail-grid{grid-template-columns:1fr 1fr}.occupancy-detail-grid>div:last-child{grid-column:1/-1}}

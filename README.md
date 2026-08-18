@@ -241,24 +241,13 @@ Open in browser: `http://localhost/smart_transit_system/`
 
 ## 👤 Demo Accounts
 
-╔══════════════════════════════════════════╗
-║        SMART TRANSIT TEST ACCOUNTS       ║
-╠══════════════════════════════════════════╣
-║ ADMIN                                    ║
-║ Email:    admin@smarttransit.com         ║
-║ Password: Admin@12345                    ║
-║ Redirect: admin/dashboard.php             ║
-╠══════════════════════════════════════════╣
-║ DRIVER                                   ║
-║ Email:    driver@smarttransit.com        ║
-║ Password: Driver@12345                   ║
-║ Redirect: driver/dashboard.php            ║
-╠══════════════════════════════════════════╣
-║ PASSENGER                                ║
-║ Email:    passenger@smarttransit.com     ║
-║ Password: Passenger@12345                ║
-║ Redirect: passenger/dashboard.php         ║
-╚══════════════════════════════════════════╝
+All demo accounts use password: `password`
+
+| Email | Role | Access |
+|-------|------|--------|
+| `admin@smarttransit.com` | Administrator | Full admin dashboard, user management, system settings |
+| `driver1@smarttransit.com` | Driver | Route assignments, passenger management, schedule tracking |
+| `passenger@smarttransit.com` | Passenger | Route browsing, booking, profile management |
 
 ⚠️ **Security**: Change all credentials before any production use.
 
@@ -479,7 +468,7 @@ This project is licensed under the **MIT License** - see [LICENSE](./LICENSE) fo
 🧪 **Testable** - Demo data ready  
 🚀 **Scalable** - Foundation for growth  
 
-----
+---
 
 **Developed by**: SHOJIB-80  
 **Last Updated**: 2025  

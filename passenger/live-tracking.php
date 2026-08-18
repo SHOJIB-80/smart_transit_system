@@ -37,7 +37,7 @@ require __DIR__ . '/../includes/header.php';
 
             <div class="tracking-note">
                 <strong>Demonstration data</strong>
-                <p>Locations are updated by the driver dashboard or seeded demo data. This project does not claim to be connected to a physical GPS device.</p>
+                <p>Locations are sent from the driver's device GPS while Live Location is running. If no GPS update is available, the bus is not shown as live.</p>
             </div>
         </aside>
 
@@ -65,6 +65,7 @@ const markerLayer = L.layerGroup().addTo(map);
 const routeLayer = L.layerGroup().addTo(map);
 let firstLoad = true;
 let currentLocations = [];
+const busMarkers = {};
 
 function escapeHtml(value) {
     const div = document.createElement('div');
@@ -115,7 +116,7 @@ function renderList(locations) {
             <span class="tracking-item-main">
                 <strong>${escapeHtml(bus.bus_number)}</strong>
                 <small>${escapeHtml(bus.route_code)} · ${escapeHtml(bus.route_name)}</small>
-                <small>${escapeHtml(etaText(bus))}</small>
+                <small>${escapeHtml(etaText(bus))}</small><small>${bus.passengers}/${bus.capacity} passengers · ${bus.occupancy_percentage}% · ${escapeHtml(bus.density)}</small>
             </span>
             <span class="tracking-item-status">${escapeHtml(bus.status.replace('_',' '))}</span>
         </button>
@@ -137,8 +138,8 @@ function showPopup(bus) {
         <div class="map-popup">
             <strong>${escapeHtml(bus.bus_number)}</strong>
             <span>${escapeHtml(bus.route_name)}</span>
-            <span>Status: ${escapeHtml(bus.status.replace('_',' '))}</span>
-            <span>Last updated: ${escapeHtml(relativeTime(bus.updated_at))}</span>
+            <span>Status: ${escapeHtml(bus.status.replace('_',' '))}</span><span>Passengers: ${bus.passengers}/${bus.capacity} (${bus.occupancy_percentage}%) · ${escapeHtml(bus.density)}</span><span>GPS accuracy: ${bus.accuracy !== null ? Math.round(bus.accuracy)+' m' : 'Unavailable'}</span>
+            <span>Last updated: ${escapeHtml(relativeTime(bus.last_updated || bus.updated_at))}</span>
             <span>ETA: ${escapeHtml(etaText(bus))}</span>
         </div>`;
     L.popup().setLatLng([bus.latitude,bus.longitude]).setContent(popup).openOn(map);
@@ -151,15 +152,25 @@ async function loadLocations() {
         const data = await response.json();
         if (!data.success) throw new Error(data.message || 'Unable to load locations');
         currentLocations = data.locations || [];
-        markerLayer.clearLayers();
         routeLayer.clearLayers();
         renderList(currentLocations);
 
+        const activeIds = new Set(currentLocations.map(bus => String(bus.bus_id)));
+        Object.keys(busMarkers).forEach(id => {
+            if(!activeIds.has(id)){ busMarkers[id].remove(); delete busMarkers[id]; }
+        });
+
         const bounds = [];
         currentLocations.forEach(bus => {
-            const marker = L.marker([bus.latitude,bus.longitude]).addTo(markerLayer);
-            marker.bindTooltip(bus.bus_number, {permanent:false});
-            marker.on('click', () => showPopup(bus));
+            let marker = busMarkers[String(bus.bus_id)];
+            if(!marker){
+                marker = L.marker([bus.latitude,bus.longitude]).addTo(markerLayer);
+                busMarkers[String(bus.bus_id)] = marker;
+                marker.bindTooltip(bus.bus_number, {permanent:false});
+            } else {
+                marker.setLatLng([bus.latitude,bus.longitude]);
+            }
+            marker.off('click').on('click', () => showPopup(bus));
             bounds.push([bus.latitude,bus.longitude]);
 
             const stops = (bus.stops || []).filter(s => s.latitude !== null && s.longitude !== null);

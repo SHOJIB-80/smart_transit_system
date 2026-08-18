@@ -23,6 +23,22 @@ require __DIR__.'/_layout.php';
 <div class="admin-stat <?= in_array($k,['emergencies','attention'])&&$stats[$k]>0?'alert-stat':'' ?>"><span><?= $icon ?></span><div><strong><?= $stats[$k] ?></strong><small><?= $label ?></small></div></div>
 <?php endforeach; ?>
 </div>
+<section class="admin-panel">
+<div class="admin-panel-head"><div><span class="admin-kicker">PASSENGER DENSITY</span><h3>Fleet occupancy</h3></div><a href="<?= BASE_URL ?>/admin/buses.php">Manage fleet →</a></div>
+<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Bus</th><th>Capacity</th><th>Passengers</th><th>Occupancy</th><th>Density</th></tr></thead><tbody>
+<?php
+$densityRows=[];
+try{
+    $densityRows=$pdo->query("SELECT b.id,b.bus_number,b.capacity,
+        (SELECT COUNT(*) FROM bus_occupancy bo WHERE bo.bus_id=b.id AND bo.exited_at IS NULL) AS passengers
+        FROM buses b ORDER BY b.bus_number")->fetchAll();
+}catch(Throwable $e){}
+?>
+<?php if(!$densityRows): ?><tr><td colspan="5">No buses available.</td></tr><?php else: foreach($densityRows as $d): $cap=max(1,(int)$d['capacity']);$pct=min(100,(int)round(((int)$d['passengers']/$cap)*100));$den=$pct<50?'LOW':($pct<80?'MEDIUM':'HIGH'); ?>
+<tr><td><strong><?= e($d['bus_number']) ?></strong></td><td><?= $cap ?></td><td><?= (int)$d['passengers'] ?></td><td><?= $pct ?>%</td><td><span class="density-<?= strtolower($den) ?> density-badge"><?= $den ?></span></td></tr>
+<?php endforeach; endif; ?>
+</tbody></table></div>
+</section>
 <div class="admin-grid-2">
 <section class="admin-panel"><div class="admin-panel-head"><div><span class="admin-kicker">NETWORK</span><h3>System overview</h3></div><a href="<?= BASE_URL ?>/admin/reports.php">View reports →</a></div>
 <div class="admin-bars">

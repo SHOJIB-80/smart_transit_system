@@ -102,8 +102,10 @@ CREATE TABLE IF NOT EXISTS live_locations (
     route_id INT UNSIGNED NOT NULL,
     latitude DECIMAL(10,7) NOT NULL,
     longitude DECIMAL(10,7) NOT NULL,
+    accuracy DECIMAL(8,2) NULL,
     status ENUM('on_route','stopped','offline','emergency') NOT NULL DEFAULT 'on_route',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (bus_id) REFERENCES buses(id) ON DELETE CASCADE,
     FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
@@ -144,4 +146,16 @@ CREATE TABLE IF NOT EXISTS activity_logs (
     details VARCHAR(500) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS bus_occupancy (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    bus_id INT UNSIGNED NOT NULL,
+    passenger_id INT UNSIGNED NOT NULL,
+    boarded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    exited_at TIMESTAMP NULL DEFAULT NULL,
+    FOREIGN KEY (bus_id) REFERENCES buses(id) ON DELETE CASCADE,
+    FOREIGN KEY (passenger_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_occupancy_bus_active (bus_id, exited_at),
+    INDEX idx_occupancy_passenger_active (passenger_id, exited_at)
 ) ENGINE=InnoDB;
