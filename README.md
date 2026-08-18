@@ -329,11 +329,17 @@ smart_transit_system/
 ### Demo Accounts
 ⚠️ **Change these credentials before production use!**
 
-| Email | Password | Role |
-|-------|----------|------|
-| `admin@smarttransit.com` | `password` | Administrator |
-| `driver1@smarttransit.com` | `password` | Driver |
-| `passenger@smarttransit.com` | `password` | Passenger |
+ADMIN
+admin@smarttransit.com
+Admin@12345
+
+DRIVER
+driver@smarttransit.com
+Driver@12345
+
+PASSENGER
+shojib@gmail.com
+newnewnew
 
 ### Security Features
 - Prepared statements (PDO) prevent SQL injection
