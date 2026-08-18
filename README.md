@@ -256,7 +256,7 @@ Open in browser: `http://localhost/smart_transit_system/`
 ╠══════════════════════════════════════════╣
 ║ PASSENGER                                ║
 ║ Email:    shojib@gmail.com     ║
-║ Password: Passenger@12345                ║
+║ Password: newnewnew               ║
 ║ Redirect: passenger/dashboard.php         ║
 ╚══════════════════════════════════════════╝
 
