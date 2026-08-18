@@ -1,8 +1,8 @@
 USE smart_transit;
 
 INSERT INTO users (name,email,phone,password,role,status) VALUES
-('System Administrator','admin@smarttransit.com','01700000001','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC4Qh1fKc7z5Jv5wF6bK','admin','active'),
-('Demo Driver','driver1@smarttransit.com','01700000002','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC4Qh1fKc7z5Jv5wF6bK','driver','active'),
+('System Administrator','admin@smarttransit.com','01700000001','$2y$12$S.brbJLXvqllj/j9NTVM4ONXm3lYT0CLDgq4IwJDhGyuRagWzbyCW','admin','active'),
+('Demo Driver','driver@smarttransit.com','01700000002','$2y$12$FI3DtIBkGXqCkQBVo/G0h.4wJGrCiwaeAAdG46yWHt6JS0fBHBo42','driver','active'),
 ('Demo Passenger','passenger@smarttransit.com','01700000003','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC4Qh1fKc7z5Jv5wF6bK','passenger','active')
 ON DUPLICATE KEY UPDATE name=VALUES(name);
 
