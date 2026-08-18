@@ -1,305 +1,394 @@
 # 🚌 Smart Transit Navigation System
 
-A comprehensive full-stack web application for public transportation management and navigation. Built with modern web technologies, this educational project demonstrates professional development practices including responsive design, secure authentication, database management, and API development.
+A modern, full-stack PHP web application for managing public transportation. Features real-time bus tracking, driver management, passenger bookings, and emergency reporting capabilities with a responsive, professional UI.
+
+**Status**: 🟢 Active Development | **Last Updated**: August 2026
+
+---
 
 ## 📋 Table of Contents
+
 - [Overview](#overview)
 - [Features](#features)
-- [What's New](#whats-new)
 - [Tech Stack](#tech-stack)
+- [Quick Start](#quick-start)
 - [Project Structure](#project-structure)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Demo Accounts](#demo-accounts)
-- [API Documentation](#api-documentation)
 - [Database Schema](#database-schema)
-- [Project Roadmap](#project-roadmap)
-- [Important Notes](#important-notes)
-- [Contributing](#contributing)
+- [Authentication](#authentication)
+- [API Endpoints](#api-endpoints)
+- [Key Improvements](#key-improvements)
+- [Troubleshooting](#troubleshooting)
 - [License](#license)
-- [Support](#support)
+
+---
 
 ## 🎯 Overview
 
-Smart Transit Navigation System is a multi-phase educational project designed to demonstrate full-stack web development. With a focus on user experience and security, it provides a complete ecosystem for passengers, drivers, and administrators to manage public transportation efficiently.
+Smart Transit Navigation System is a comprehensive transportation management platform designed for educational purposes and real-world deployment. It provides:
 
-The system features a modern, responsive UI with a professional dashboard system, role-based access control, and comprehensive route management capabilities.
+- **Multi-role access control** (Admin, Driver, Passenger)
+- **Real-time GPS tracking** for buses
+- **Live location updates** with accuracy metrics
+- **Emergency reporting** system for drivers
+- **Vehicle condition monitoring**
+- **Trip management** with detailed logging
+- **Passenger occupancy tracking**
+- **Comprehensive activity logging**
+- **Professional, responsive UI** with modern design patterns
+
+The system is built with PHP, MySQL, and vanilla JavaScript, utilizing PDO prepared statements for security and optimized database schema with proper indexing.
+
+---
 
 ## ✨ Features
 
-### ✅ Implemented Features
+### 🔐 Authentication & Authorization
+- Secure user registration and login with session management
+- Role-based access control (Admin, Driver, Passenger)
+- CSRF token protection on all forms
+- Session regeneration on login
+- Password verification using PHP password functions
+- User status management (active/inactive)
 
-#### User Management & Authentication
-- 🔐 Secure user registration and login system
-- 🎯 Role-based authorization (Admin, Driver, Passenger)
-- 👤 User profile management
-- 🔑 Session management with security considerations
-- 🛡️ CSRF token protection
-- 📝 Password security best practices
+### 📍 Real-Time Tracking
+- **Live location updates** with GPS coordinates (latitude, longitude)
+- **Accuracy metrics** for location precision
+- **Bus status indicators** (on_route, stopped, offline, emergency)
+- **Timestamps** for location updates
+- Database-backed tracking for persistence
 
-#### Frontend Experience
-- 🎨 Modern, responsive landing page with smooth animations
-- 📱 Mobile-optimized design
-- 🎭 Professional visual hierarchy and color scheme
-- ⚡ Smooth scrolling and interactive elements
-- 🌓 Accessibility-focused design
-- 💫 Floating card animations and visual effects
+### 🚗 Driver Features
+- Driver authentication and profile management
+- Route assignment interface
+- Active trip tracking
+- **Emergency reporting** system
+  - Severity levels (Low, Medium, High, Critical)
+  - Status tracking (New, Investigating, Resolved)
+  - Automatic logging with timestamps
+- **Vehicle condition reports**
+  - Pre-trip vehicle condition assessment
+  - Condition status (Good, Needs Attention, Maintenance Required)
+  - Notes and detailed reporting
+- Passenger management on assigned routes
+- Schedule tracking and trip history
 
-#### Passenger Features
-- 🛣️ Browse available routes and schedules
-- 🚌 View detailed bus information and specifications
-- ⏰ Real-time schedule filtering and availability checking
-- 🎟️ Booking interface (foundation ready)
-- 📢 System announcements and notices
-- 🔍 Advanced search capabilities
-- ❤️ Favorite routes management (foundation)
+### 👤 Passenger Features
+- Browse available routes and real-time schedules
+- View detailed bus information and specifications
+- Track live bus locations on routes
+- Advanced route search and filtering
+- Booking management interface
+- Passenger occupancy tracking (boarding/exiting)
+- Favorite routes management
+- System announcements and notices
 
-#### Admin Dashboard
-- 📊 Administrative control panel
-- 🚌 Bus fleet management
-- 🛣️ Route management and creation
-- 👥 User management tools
-- 📈 System monitoring capabilities
-- 🔧 Configuration management
+### 👨‍💼 Admin Features
+- Comprehensive dashboard with system overview
+- Bus fleet management and specifications
+- Route creation and management
+- User management and role assignment
+- Activity monitoring and logging
+- Emergency report management
+- System-wide statistics and analytics
+- Configuration management
 
-#### Driver Portal
-- 📍 Driver authentication and profile
-- 🗺️ Route assignment interface
-- 👥 Passenger management
-- 📊 Schedule tracking
-- 💼 Professional driver dashboard
+### 📊 Data Management
+- **Driver Assignments**: Track active driver-bus-route assignments
+- **Trips**: Full trip lifecycle management (scheduled → active → completed/cancelled)
+- **Live Locations**: Real-time GPS updates with accuracy tracking
+- **Vehicle Conditions**: Pre-trip and ongoing condition monitoring
+- **Emergency Reports**: Critical incident tracking and resolution
+- **Activity Logs**: Comprehensive audit trail of all system actions
+- **Bus Occupancy**: Passenger boarding and exit tracking
+- 100+ pre-configured demo records
 
-#### Backend Infrastructure
-- 🗄️ MySQL database with normalized schema
-- 📋 10+ database tables with relationships
-- 🔒 Prepared statements for SQL injection prevention
-- 📦 RESTful API foundation
-- 🛡️ Security best practices implementation
-- 💾 Efficient data management
+### 🎨 Frontend
+- Modern, responsive landing page with animations
+- Mobile-optimized design (works on all screen sizes)
+- Professional color scheme and visual hierarchy
+- Smooth scrolling and interactive elements
+- Accessibility-focused design
+- Floating card animations and visual effects
+- Professional dashboard layouts for each user role
 
-#### Data Management
-- 📦 Comprehensive demo data (100+ records)
-- 🔄 Database seeding system
-- 📊 Sample routes, buses, and schedules
-- 👤 Pre-configured test accounts
-- 📝 Easy database initialization
-
-### 🚀 Upcoming Features
-
-#### Phase 2: Real-Time Tracking
-- 🗺️ Leaflet map integration
-- 🌍 OpenStreetMap API integration
-- 📍 GPS tracking capabilities
-- ⏱️ Real-time ETA calculations
-- 📡 Live bus location updates
-- 🔴 Live tracking status indicator
-- 📱 Mobile tracking app
-
-#### Phase 3: Enhanced Admin Dashboard
-- 📊 Advanced analytics and reporting
-- 📈 System statistics and KPIs
-- 👥 User activity monitoring
-- 💰 Financial reporting (future)
-- 📋 Route efficiency analysis
-- 🎯 Performance metrics
-
-#### Phase 4: Production Polish
-- 🔔 Push notification system
-- 🔐 Enhanced security measures
-- ✅ Automated testing suite
-- ⚡ Performance optimization
-- 📖 API documentation
-- 🚀 Deployment automation
-- 🔄 CI/CD pipeline
-
-## 🆕 What's New
-
-Recent updates include:
-- ✨ Enhanced frontend UI with modern design patterns
-- 📁 Expanded directory structure (admin, driver, passenger, api, assets)
-- 🎨 Improved styling and visual components
-- 🔧 New PHP configuration files
-- 📚 Additional database capabilities
-- 🚀 API endpoint foundation
-- 💡 Enhanced functionality for all user roles
+---
 
 ## 🛠️ Tech Stack
 
-| Category | Technology | Version |
-|----------|-----------|---------|
-| **Frontend** | HTML5, CSS3, Vanilla JavaScript | Latest |
-| **Backend** | PHP | 7.0+ |
-| **Database** | MySQL | 5.7+ |
-| **Server** | Apache (XAMPP) | Latest |
-| **Maps (Future)** | Leaflet, OpenStreetMap | TBD |
-| **API** | RESTful JSON | - |
+| Component | Technology | Notes |
+|-----------|-----------|-------|
+| **Frontend** | HTML5, CSS3, Vanilla JavaScript | Responsive, no framework dependencies |
+| **Backend** | PHP 7.0+ | PDO with prepared statements |
+| **Database** | MySQL 5.7+ | Normalized schema with indexes |
+| **Server** | Apache (XAMPP) | .htaccess configuration included |
+| **Sessions** | PHP Sessions | Secure server-side storage |
+| **Security** | Password hashing, CSRF tokens | Best practices implemented |
 
-## 📁 Project Structure
+---
 
-```
-smart-transit-system/
-├── admin/                    # Admin panel and management tools
-│   ├── dashboard.php        # Admin dashboard
-│   ├── users.php           # User management
-│   ├── routes.php          # Route management
-│   └── ...
-├── driver/                   # Driver portal
-│   ├── dashboard.php        # Driver dashboard
-│   ├── assignments.php      # Route assignments
-│   └── passengers.php       # Passenger management
-├── passenger/               # Passenger dashboard
-│   ├── dashboard.php        # Passenger home
-│   ├── browse-routes.php    # Route browsing
-│   ├── bookings.php         # Booking management
-│   └── profile.php          # User profile
-├── api/                      # REST API endpoints
-│   ├── routes.php           # Route API
-│   ├── buses.php            # Bus API
-│   ├── schedules.php        # Schedule API
-│   └── bookings.php         # Booking API
-├── assets/                   # Static files
-│   ├── css/                 # Stylesheets
-│   ├── js/                  # JavaScript files
-│   └── images/              # Images and icons
-├── config/                   # Configuration files
-│   ├── database.php         # Database configuration
-│   ├── constants.php        # Application constants
-│   └── settings.php         # Settings
-├── database/                 # Database files
-│   ├── schema.sql           # Database schema
-│   ├── seed.sql             # Sample data
-│   └── migrations/          # Database migrations
-├── includes/                 # Shared PHP includes
-│   ├── header.php           # Header component
-│   ├── footer.php           # Footer component
-│   ├── navbar.php           # Navigation bar
-│   ├── auth.php             # Authentication functions
-│   ├── db.php               # Database functions
-│   └── functions.php        # Utility functions
-├── index.php                 # Landing page
-├── login.php                 # Login page
-├── register.php              # Registration page
-├── logout.php                # Logout handler
-├── about.php                 # About page
-├── .htaccess                 # Apache configuration
-├── .env.example              # Environment variables template
-└── README.md                 # This file
-```
+## 🚀 Quick Start
 
-## 📦 Requirements
-
-- **XAMPP** (Apache, MySQL, PHP 7.0+)
-- **Modern Web Browser** (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
-- **Disk Space**: ~150MB
+### Prerequisites
+- **XAMPP** (Apache, MySQL, PHP 7.0+) - [Download](https://www.apachefriends.org/)
+- **Modern browser** (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
+- **Disk space**: ~200MB
 - **RAM**: 2GB minimum
-- **JavaScript**: Enabled in browser
 
-## 🚀 Installation
+### Installation Steps
 
-### Step 1: Download & Setup XAMPP
-```bash
-# Download from https://www.apachefriends.org/
-# Install with Apache and MySQL components
-```
-
-### Step 2: Clone Repository
+#### 1. Clone Repository
 ```bash
 git clone https://github.com/SHOJIB-80/smart_transit_system.git
-# Or download as ZIP and extract
+cd smart_transit_system
 ```
 
-### Step 3: Move to XAMPP
-- **Windows**: Copy folder to `C:\xampp\htdocs\`
-- **Linux**: Copy folder to `/opt/lampp/htdocs/`
-- **macOS**: Copy folder to `/Applications/XAMPP/htdocs/`
+#### 2. Move to XAMPP
+- **Windows**: Copy folder to `C:\xampp\htdocs\smart_transit_system`
+- **Linux**: Copy folder to `/opt/lampp/htdocs/smart_transit_system`
+- **macOS**: Copy folder to `/Applications/XAMPP/htdocs/smart_transit_system`
 
-### Step 4: Start Services
+#### 3. Start XAMPP Services
 - Open XAMPP Control Panel
 - Start **Apache** module
 - Start **MySQL** module
 
-### Step 5: Setup Database
+#### 4. Setup Database
 1. Open `http://localhost/phpmyadmin/`
 2. Create new database: `smart_transit`
-3. Import database files in order:
-   ```
-   1. database/schema.sql    (Create tables)
-   2. database/seed.sql      (Add demo data)
-   ```
+3. Import database initialization:
+   - Go to **Import** tab
+   - The database schema and tables will be created automatically when you access the application for the first time
 
-### Step 6: Configure Database Connection
-Edit `config/database.php`:
-```php
-$host = 'localhost';
-$user = 'root';
-$password = '';           // Default XAMPP password
-$database = 'smart_transit';
+#### 5. Access Application
+Open in your browser:
+```
+http://localhost/smart_transit_system/
 ```
 
-### Step 7: Access Application
-Open in browser: `http://localhost/smart_transit_system/`
+---
 
-## 👤 Demo Accounts
+## 📁 Project Structure
 
-╔══════════════════════════════════════════╗
-║        SMART TRANSIT TEST ACCOUNTS       ║
-╠══════════════════════════════════════════╣
-║ ADMIN                                    ║
-║ Email:    admin@smarttransit.com         ║
-║ Password: Admin@12345                    ║
-║ Redirect: admin/dashboard.php             ║
-╠══════════════════════════════════════════╣
-║ DRIVER                                   ║
-║ Email:    driver@smarttransit.com        ║
-║ Password: Driver@12345                   ║
-║ Redirect: driver/dashboard.php            ║
-╠══════════════════════════════════════════╣
-║ PASSENGER                                ║
-║ Email:    shojib@gmail.com     ║
-║ Password: newnewnew               ║
-║ Redirect: passenger/dashboard.php         ║
-╚══════════════════════════════════════════╝
+```
+smart_transit_system/
+├── admin/                       # Admin dashboard & management
+│   ├── dashboard.php           # Admin overview & statistics
+│   ├── users.php               # User management
+│   ├── routes.php              # Route management
+│   ├── buses.php               # Bus fleet management
+│   └── emergency-reports.php   # Emergency incident tracking
+│
+├── driver/                      # Driver portal
+│   ├── dashboard.php           # Driver home & active trips
+│   ├── assignments.php         # Route assignments
+│   ├── emergency-report.php    # Report emergency incidents
+│   ├── vehicle-condition.php   # Pre-trip condition assessment
+│   └── passengers.php          # Passenger management
+│
+├── passenger/                   # Passenger interface
+│   ├── dashboard.php           # Passenger home
+│   ├── browse-routes.php       # Route browsing & search
+│   ├── tracking.php            # Live bus tracking
+│   ├── bookings.php            # Booking management
+│   └── profile.php             # User profile & preferences
+│
+├── api/                         # REST API endpoints (foundation)
+│   ├── routes.php              # Route API
+│   ├── buses.php               # Bus API
+│   ├── schedules.php           # Schedule API
+│   ├── trips.php               # Trip API
+│   ├── locations.php           # Live location API
+│   └── emergency.php           # Emergency API
+│
+├── assets/                      # Static files
+│   ├── css/                    # Stylesheets
+│   ├── js/                     # JavaScript files
+│   └── images/                 # Images and icons
+│
+├── config/                      # Configuration files
+│   ├── database.php            # Database connection & schema creation
+│   ├── config.php              # Application configuration
+│   └── constants.php           # App constants
+│
+├── database/                    # Database files (reference)
+│   ├── schema.sql              # Database schema documentation
+│   └── seed.sql                # Sample data
+│
+├── includes/                    # Shared PHP includes
+│   ├── header.php              # HTML header with navigation
+│   ├── footer.php              # HTML footer
+│   ├── navbar.php              # Navigation bar component
+│   ├── auth.php                # Authentication functions
+│   ├── db.php                  # Database utility functions
+│   └── functions.php           # General utility functions
+│
+├── index.php                    # Landing page
+├── login.php                    # Login page
+├── register.php                 # Registration page
+├── logout.php                   # Logout handler
+├── about.php                    # About page
+├── .htaccess                    # Apache configuration
+├── .env.example                 # Environment template
+└── README.md                    # This file
+```
 
-⚠️ **Security**: Change all credentials before any production use.
+---
 
-## 📡 API Documentation
+## 🗄️ Database Schema
+
+### Core Tables
+
+#### `users`
+- User accounts with roles (Admin, Driver, Passenger)
+- Email, phone, encrypted passwords
+- Status tracking (active/inactive)
+
+#### `roles`
+- Role definitions (Admin, Driver, Passenger)
+- Permission management
+
+#### `routes`
+- Transit routes with start/end points
+- Distance and duration information
+- Route status
+
+#### `buses`
+- Bus fleet information
+- Registration numbers, capacity
+- Current status and condition
+
+#### `schedules`
+- Route schedules and timings
+- Departure and arrival times
+- Frequency information
+
+#### `stops`
+- Bus stops and stations
+- GPS coordinates
+- Stop sequences
+
+#### `driver_assignments` ⭐ **NEW**
+- Active driver-bus-route assignments
+- Unique constraints for single active driver per bus
+- Status tracking (active/inactive)
+
+#### `trips` ⭐ **NEW**
+- Complete trip lifecycle management
+- Start/end times
+- Status: scheduled, active, completed, cancelled
+- Indexed for quick lookup
+
+#### `live_locations` ⭐ **NEW**
+- Real-time GPS coordinates
+- Latitude, longitude, accuracy
+- Bus status (on_route, stopped, offline, emergency)
+- Automatic timestamp updates
+
+#### `vehicle_conditions` ⭐ **NEW**
+- Pre-trip and ongoing vehicle assessment
+- Condition status: Good, Needs Attention, Maintenance Required
+- Driver notes and observations
+- Automatic reporting
+
+#### `emergency_reports` ⭐ **NEW**
+- Driver emergency incident reporting
+- Severity levels: Low, Medium, High, Critical
+- Status tracking: New, Investigating, Resolved
+- Automatic resolution timestamp
+
+#### `activity_logs` ⭐ **NEW**
+- Comprehensive audit trail
+- User actions and system events
+- Entity tracking (what was changed)
+- Automatic timestamps
+
+#### `bus_occupancy` ⭐ **NEW**
+- Passenger boarding/exiting records
+- Current occupancy tracking
+- Boarded and exited timestamps
+- Query optimization for active passengers
+
+#### Additional Tables
+- `bookings` - Passenger bookings
+- `fare_rates` - Pricing information
+- `announcements` - System notifications
+- `user_sessions` - Session management
+
+---
+
+## 🔐 Authentication
+
+### How It Works
+1. Users register with email and password
+2. Passwords are hashed using PHP's `password_hash()` function
+3. On login, credentials are verified against stored hash
+4. Session is created with user details (ID, name, email, role)
+5. CSRF tokens protect all form submissions
+6. Session ID is regenerated on successful login
+
+### Demo Accounts
+⚠️ **Change these credentials before production use!**
+
+| Email | Password | Role |
+|-------|----------|------|
+| `admin@smarttransit.com` | `password` | Administrator |
+| `driver1@smarttransit.com` | `password` | Driver |
+| `passenger@smarttransit.com` | `password` | Passenger |
+
+### Security Features
+- Prepared statements (PDO) prevent SQL injection
+- Password hashing prevents plain-text storage
+- CSRF tokens on all forms
+- Session regeneration after login
+- Activity logging for audit trails
+- Role-based access control on all pages
+
+---
+
+## 📡 API Endpoints
 
 ### Base URL
 ```
 http://localhost/smart_transit_system/api/
 ```
 
-### Endpoints (Foundation Ready)
+### Available Endpoints (JSON Response)
 
-#### Routes API
+#### Routes
 ```
-GET    /api/routes.php           - Get all routes
-GET    /api/routes.php?id=1      - Get specific route
-POST   /api/routes.php           - Create route (Admin)
-PUT    /api/routes.php?id=1      - Update route (Admin)
-DELETE /api/routes.php?id=1      - Delete route (Admin)
+GET    /routes.php              - Get all routes
+GET    /routes.php?id=1         - Get specific route
+POST   /routes.php              - Create route (Admin only)
 ```
 
-#### Buses API
+#### Buses
 ```
-GET    /api/buses.php            - Get all buses
-GET    /api/buses.php?id=1       - Get specific bus
-POST   /api/buses.php            - Create bus (Admin)
-```
-
-#### Schedules API
-```
-GET    /api/schedules.php        - Get all schedules
-GET    /api/schedules.php?route_id=1  - Get route schedules
+GET    /buses.php               - Get all buses
+GET    /buses.php?id=1          - Get specific bus info
+POST   /buses.php               - Create bus entry (Admin only)
 ```
 
-#### Bookings API
+#### Trips
 ```
-GET    /api/bookings.php         - Get user bookings
-POST   /api/bookings.php         - Create booking (Passenger)
+GET    /trips.php               - Get all trips
+GET    /trips.php?status=active - Filter by status
+POST   /trips.php               - Create trip
 ```
 
-**Response Format**: JSON
+#### Live Locations
+```
+GET    /locations.php           - Get latest locations
+GET    /locations.php?bus_id=1  - Get bus location
+POST   /locations.php           - Update location (Driver only)
+```
+
+#### Emergency Reports
+```
+GET    /emergency.php           - Get reports
+POST   /emergency.php           - Create report (Driver only)
+```
+
+### Response Format
 ```json
 {
   "success": true,
@@ -308,180 +397,173 @@ POST   /api/bookings.php         - Create booking (Passenger)
 }
 ```
 
-## 🗄️ Database Schema
+---
 
-### Core Tables
-- **users** - User accounts and credentials
-- **roles** - User roles (Admin, Driver, Passenger)
-- **routes** - Transit routes and paths
-- **buses** - Bus fleet information
-- **schedules** - Route schedules and timings
-- **stops** - Bus stops and locations
-- **bookings** - Passenger bookings
-- **fare_rates** - Pricing information
-- **announcements** - System notifications
-- **user_sessions** - Session management
+## 🔄 Key Improvements (Latest Updates)
 
-## 🗺️ Project Roadmap
+### Phase 2: Real-Time Tracking ✅
+- ✅ Live GPS location tracking with accuracy metrics
+- ✅ Real-time bus status indicators
+- ✅ Trip management system
+- ✅ Automatic location timestamp updates
+- ✅ Bus occupancy tracking
 
-### Phase 1: Foundation ✅
-- [x] User authentication system
-- [x] Role-based access control
-- [x] Landing page and UI
-- [x] Passenger dashboard
-- [x] Admin dashboard
-- [x] Driver portal
-- [x] Database design
-- [x] API foundation
+### Phase 3: Emergency & Maintenance 🟢
+- ✅ Emergency reporting system for drivers
+- ✅ Severity-based incident categorization
+- ✅ Vehicle condition pre-trip assessment
+- ✅ Maintenance tracking
+- ✅ Resolution timeline tracking
 
-### Phase 2: Real-Time Tracking 🔄
-- [ ] Leaflet map integration
-- [ ] OpenStreetMap API
-- [ ] GPS tracking
-- [ ] Real-time ETA
-- [ ] Live updates
-- [ ] Mobile optimization
+### Phase 4: Monitoring & Logging 🟢
+- ✅ Comprehensive activity logs
+- ✅ Admin audit trails
+- ✅ Driver assignment tracking
+- ✅ Passenger occupancy records
+- ✅ Database-backed persistence
 
-### Phase 3: Admin Management 🚀
-- [ ] Advanced analytics
-- [ ] Report generation
-- [ ] Performance monitoring
-- [ ] Financial management
-- [ ] User activity logs
+### Database Enhancements
+- ✅ Optimized schema with proper indexes
+- ✅ Foreign key constraints for data integrity
+- ✅ ENUM types for status/state management
+- ✅ Automatic timestamp management
+- ✅ Unique constraints for business logic
+- ✅ Cascade delete rules
 
-### Phase 4: Production Ready ⭐
-- [ ] Comprehensive testing
-- [ ] Security hardening
-- [ ] Performance tuning
-- [ ] Documentation
-- [ ] Deployment guides
-- [ ] CI/CD pipeline
+---
 
-## ⚠️ Important Notes
+## 🐛 Troubleshooting
 
-### Demo Data
-- All routes, buses, and stop data are **sample/demonstration only**
-- NOT official transportation authority data
-- Not suitable for production without proper licensing
-- Integrate with real transit authority APIs for production
+### Common Issues
 
-### Browser Support
-- Modern browsers only (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
-- Requires JavaScript enabled
-- Responsive design for all screen sizes
-- Mobile-friendly interface
+**Q: "Database connection failed" error**
+- Verify MySQL is running in XAMPP
+- Check `config/database.php` settings match your setup
+- Ensure database `smart_transit` exists
+- Verify database user/password
 
-### Security Considerations
-- All passwords should be changed after deployment
-- Enable HTTPS in production
-- Update all dependencies regularly
-- Regular security audits recommended
-- Database backups essential for production
+**Q: Blank page on first load**
+- Check browser console for JavaScript errors
+- Enable PHP error reporting in `config/database.php`
+- Verify Apache is running
+- Check file permissions
 
-### Database Management
-- Regular backups recommended
-- Export via phpMyAdmin for version control
-- Monitor database growth
-- Optimize queries for performance
+**Q: Login not working**
+- Clear browser cookies/session
+- Verify demo account credentials
+- Check database connection
+- Review `config/database.php` for correct host/password
 
-## 🤝 Contributing
+**Q: Images/CSS not loading**
+- Verify `assets/` folder structure
+- Check .htaccess configuration
+- Ensure XAMPP server is running
+- Check browser console for 404 errors
 
-We welcome contributions! Follow these steps:
+**Q: Real-time tracking not updating**
+- Verify `live_locations` table exists
+- Check for JavaScript console errors
+- Ensure API endpoints are accessible
+- Verify database connection
 
-1. **Fork** the repository
-2. **Create** feature branch: `git checkout -b feature/YourFeature`
-3. **Commit** changes: `git commit -m 'Add YourFeature'`
-4. **Push** to branch: `git push origin feature/YourFeature`
-5. **Open** Pull Request with detailed description
-
-### Code Standards
-- Follow PSR-12 PHP coding standards
-- Comment complex logic
-- Test all changes thoroughly
-- Update documentation
-- Ensure responsive design
-
-### Commit Message Format
+### Debug Mode
+Enable error reporting in `config/database.php`:
+```php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ```
-feat: Add new feature description
-fix: Fix bug description
-docs: Update documentation
-style: Code style changes
-refactor: Code refactoring
-```
+
+### Support Resources
+- GitHub Issues: [SHOJIB-80/smart_transit_system/issues](https://github.com/SHOJIB-80/smart_transit_system/issues)
+- Check code comments and documentation
+- Review database schema in `database/` folder
+- Test with demo accounts first
+
+---
+
+## 📊 Project Statistics
+
+- **Language Composition**: PHP 84.3%, Hack 15.5%, JavaScript 0.2%
+- **Database Tables**: 15+
+- **Indexed Columns**: 20+
+- **Demo Records**: 100+
+- **API Endpoints**: 6+
+- **Responsive Breakpoints**: Mobile, Tablet, Desktop
+- **PHP Files**: 30+
+- **Development Status**: 🟢 Active
+
+---
+
+## 🏆 Features Highlights
+
+| Feature | Status | Details |
+|---------|--------|---------|
+| User Authentication | ✅ Complete | Secure with CSRF protection |
+| Role-Based Access | ✅ Complete | Admin, Driver, Passenger roles |
+| Real-Time Tracking | ✅ Complete | GPS with accuracy metrics |
+| Emergency Reporting | ✅ Complete | Multi-level severity tracking |
+| Trip Management | ✅ Complete | Full lifecycle from schedule to completion |
+| Vehicle Conditions | ✅ Complete | Pre-trip and ongoing assessment |
+| Activity Logging | ✅ Complete | Comprehensive audit trails |
+| Occupancy Tracking | ✅ Complete | Passenger boarding/exit records |
+| Responsive UI | ✅ Complete | Mobile, tablet, desktop |
+| Admin Dashboard | ✅ Complete | System overview and management |
+| Driver Portal | ✅ Complete | Assignments and reporting |
+| Passenger Dashboard | ✅ Complete | Bookings and tracking |
+
+---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see [LICENSE](./LICENSE) for details.
+This project is licensed under the **MIT License** - educational use permitted.
 
 ### MIT License Summary
 ✅ Use for educational purposes  
 ✅ Modify and improve the code  
 ✅ Distribute copies  
 ✅ Include in personal/commercial projects  
-
 ⚠️ No warranty provided
 
-## 📞 Support
+---
 
-### Troubleshooting
+## 📞 Support & Contact
 
-**Q: Apache/MySQL won't start?**
-- Verify ports 80 and 3306 are available
-- Run XAMPP as Administrator
-- Check XAMPP error logs
-
-**Q: Database import fails?**
-- Ensure database exists first
-- Check MySQL version compatibility
-- Verify file permissions
-
-**Q: Blank page displayed?**
-- Check browser console for errors
-- Verify PHP version (7.0+ required)
-- Enable error reporting in `config/database.php`
-
-**Q: Login not working?**
-- Verify demo account credentials
-- Clear browser cookies
-- Check database connection
-- Review session settings
-
-### Resources
-- Check [GitHub Issues](https://github.com/SHOJIB-80/smart_transit_system/issues)
-- Review code comments and documentation
-- Test with demo accounts first
-- Enable debug mode for troubleshooting
+### Troubleshooting Steps
+1. Verify XAMPP services are running (Apache + MySQL)
+2. Check database connection in `config/database.php`
+3. Clear browser cache and cookies
+4. Check browser console for errors
+5. Review PHP error logs
 
 ### Reporting Issues
-- Provide detailed error messages
-- Include browser console output
-- Specify steps to reproduce
-- Attach relevant screenshots
+When reporting issues, please include:
+- Error message or screenshot
+- Steps to reproduce
+- Browser and PHP version
+- Database state if applicable
 
-## 📊 Project Statistics
-
-- **Language**: PHP, HTML5, CSS3, JavaScript
-- **Database Tables**: 10+
-- **Demo Records**: 100+
-- **Lines of Code**: 5000+
-- **API Endpoints**: 15+
-- **Responsive Breakpoints**: Mobile, Tablet, Desktop
-- **Development Status**: Active
-
-## 🏆 Key Highlights
-
-✨ **Professional Design** - Modern, clean UI  
-🔐 **Secure** - Industry security practices  
-📱 **Responsive** - Works on all devices  
-⚡ **Performant** - Optimized for speed  
-📚 **Well-Documented** - Clear code comments  
-🧪 **Testable** - Demo data ready  
-🚀 **Scalable** - Foundation for growth  
+### Contributing
+We welcome contributions! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ---
 
 **Developed by**: SHOJIB-80  
-**Last Updated**: 2025  
+**Repository**: [GitHub](https://github.com/SHOJIB-80/smart_transit_system)  
 **Status**: 🟢 Active Development  
-**Repository**: [GitHub](https://github.com/SHOJIB-80/smart_transit_system)
+**Last Updated**: August 2026
+
+---
+
+## 🎯 Upcoming Roadmap
+
+- 🔄 **Phase 5**: Map Integration (Leaflet/OpenStreetMap)
+- 🔄 **Phase 6**: Push Notifications
+- 🔄 **Phase 7**: Advanced Analytics
+- 🔄 **Phase 8**: Mobile App
+- 🔄 **Phase 9**: AI-based Route Optimization
+- 🔄 **Phase 10**: Production Hardening & Deployment
